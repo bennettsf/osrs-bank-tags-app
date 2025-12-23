@@ -13,3 +13,20 @@
 .copy-button {
   font-size: 1rem;
 }
+
+.card-footer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+}
+
+.like-button {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.like-button :hover {
+}

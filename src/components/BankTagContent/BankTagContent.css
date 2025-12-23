@@ -1,0 +1,53 @@
+.tags-container {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-auto-rows: 200px;
+  gap: 1em;
+  text-align: center;
+  justify-content: center;
+  align-content: start;
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.tags-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+.content-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  gap: 2em;
+  padding: 2em;
+}
+
+.search-bar {
+  align-self: center;
+}
+
+.search-bar input {
+  border-color: white;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.search-bar input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.search-bar svg {
+  color: white;
+}
+
+@media (max-width: 42em) {
+}
+
+@media (max-width: 56em) {
+  .search-bar input {
+    width: 100%;
+  }
+}
