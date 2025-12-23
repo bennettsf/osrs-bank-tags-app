@@ -1,4 +1,4 @@
-import { Button } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
 import './BankTagCard.css';
 import type { BankTagData } from '@/types';
 import { FaRegCopy } from 'react-icons/fa6';
@@ -34,7 +34,7 @@ function BankTagCard({ data }: BankTagCardProps) {
 
   return (
     <div className="bank-tag-card">
-      {data.tagName}
+      <Text className="unselectable-text">{data.tagName}</Text>
       <div className="card-footer">
         <Button onClick={handleCopy} className="copy-button">
           Import String <FaRegCopy />

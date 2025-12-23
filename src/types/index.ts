@@ -4,3 +4,11 @@ export type BankTagData = {
   tagString: string;
   tagTags: string[];
 };
+
+export type CreateBankTagPayload = {
+  name: string;
+  icon: string;
+  import_string: string;
+  layout: boolean;
+  tags?: string | null;
+};
