@@ -10,5 +10,5 @@ export type CreateBankTagPayload = {
   icon: string;
   import_string: string;
   layout: boolean;
-  tags?: string | null;
+  tags?: string[] | null;
 };
