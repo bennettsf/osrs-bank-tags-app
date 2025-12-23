@@ -17,3 +17,20 @@ body {
   font-family: 'RuneScape-Plain-12', Arial, sans-serif;
   background-color: #1b1a1a;
 }
+
+.unselectable-text {
+  /* Standard property (modern browsers) */
+  user-select: none;
+
+  /* Safari */
+  -webkit-user-select: none;
+
+  /* Firefox */
+  -moz-user-select: none;
+
+  /* Internet Explorer/Edge */
+  -ms-user-select: none;
+
+  /* Optional: Change cursor to default arrow to indicate text is not interactive */
+  cursor: default;
+}
