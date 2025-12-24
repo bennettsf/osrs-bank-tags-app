@@ -1,8 +1,6 @@
 .home-container {
   display: grid;
   grid-template-columns: 250px 1fr;
-  height: 100vh;
-  box-sizing: border-box;
-  padding-top: 60px; /* reserve space for fixed nav (60px) */
-  overflow: hidden; /* prevent page scroll */
+  height: 100%;
+  overflow: hidden; /* keep scrolling inside content area only */
 }

@@ -34,3 +34,7 @@ body {
   /* Optional: Change cursor to default arrow to indicate text is not interactive */
   cursor: default;
 }
+
+main {
+  padding-top: 60px; /* Height of the fixed nav-bar */
+}

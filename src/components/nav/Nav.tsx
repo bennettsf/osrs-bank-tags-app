@@ -1,18 +1,19 @@
 import './Nav.css';
 import { Text } from '@chakra-ui/react';
+import { Link } from 'react-router-dom';
 
 function Nav() {
   return (
     <div className="nav-bar">
-      <Text className="logo">
-        <a href="/">OSRS Bank Tags </a>
+      <Text className="nav-logo nav-button">
+        <Link to="/">OSRS Bank Tags </Link>
       </Text>
       <nav className="nav-container">
         <ul>
           <li>
-            <a href="/create" className="nav-import-button">
+            <Link to="/create" className="nav-import-button nav-button">
               Import Bank Tab
-            </a>
+            </Link>
           </li>
         </ul>
       </nav>

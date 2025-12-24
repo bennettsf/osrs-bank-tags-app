@@ -3,6 +3,7 @@
   grid-template-rows: auto 1fr;
   border-right: 1px solid #444;
   height: 100%;
+  overflow: hidden; /* prevent sidebar from scrolling */
 }
 
 .sidebar-items {

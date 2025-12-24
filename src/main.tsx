@@ -3,14 +3,25 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
-// import { createBrowserRouter, createHashRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import HomePage from './pages/home/HomePage.tsx';
+import Create from './pages/create/Create.tsx';
 
-// const browserRouter = createBrowserRouter([]);
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <App />, // layout with Nav + Outlet
+    children: [
+      { index: true, element: <HomePage /> },
+      { path: 'create', element: <Create /> },
+    ],
+  },
+]);
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider>
-      <App />
+      <RouterProvider router={router} />
     </Provider>
   </StrictMode>
 );
