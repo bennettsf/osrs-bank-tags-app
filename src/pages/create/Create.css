@@ -121,7 +121,8 @@
   grid-template-areas:
     'box-form      box-bank-tab'
     'box-form     box-bank-tab'
-    'box-tags     box-bank-tab';
+    'box-tags     box-bank-tab'
+    'box-submit   box-bank-tab';
 }
 
 @media (max-width: 56em) {
@@ -132,7 +133,8 @@
     grid-template-areas:
       'box-form'
       'box-bank-tab'
-      'box-tags';
+      'box-tags'
+      'box-submit';
   }
 
   .create-textarea {

@@ -15,5 +15,5 @@ export async function createBankTab(payload: CreateBankTagPayload) {
   if (error) {
     throw error;
   }
-  return [data, error];
+  return data;
 }

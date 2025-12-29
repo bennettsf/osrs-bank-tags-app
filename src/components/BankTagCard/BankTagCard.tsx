@@ -1,9 +1,10 @@
-import { Button, Text } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 import './BankTagCard.css';
 import type { BankTagData } from '@/types';
 import { FaRegCopy } from 'react-icons/fa6';
 import { IoMdHeart, IoMdHeartEmpty } from 'react-icons/io';
 import { useState } from 'react';
+import { Link } from 'react-router';
 
 interface BankTagCardProps {
   data: BankTagData;
@@ -34,7 +35,13 @@ function BankTagCard({ data }: BankTagCardProps) {
 
   return (
     <div className="bank-tag-card">
-      <Text className="unselectable-text">{data.tagName}</Text>
+      <Link
+        className="unselectable-text"
+        style={{ cursor: 'pointer' }}
+        to={`/banktab/${data.tagId}`}
+      >
+        {data.tagName}
+      </Link>
       <div className="card-footer">
         <Button onClick={handleCopy} className="copy-button">
           Import String <FaRegCopy />

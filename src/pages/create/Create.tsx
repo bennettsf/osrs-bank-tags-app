@@ -19,6 +19,7 @@ import { FaRegQuestionCircle } from 'react-icons/fa';
 import { TagsEnum, type Tags, CreateSchema } from './models';
 import { FaRegSquarePlus } from 'react-icons/fa6';
 import { useCreateBankTab } from '@/hooks/useCreateBankTab';
+import { useNavigate } from 'react-router-dom';
 
 function Create() {
   const [importString, setImportString] = useState('');
@@ -29,6 +30,7 @@ function Create() {
   const [tagName, setTagName] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<Tags[]>([]);
   const [itemIds, setItemIds] = useState<string[] | null>(null);
+  const navigate = useNavigate();
 
   const createBankTab = useCreateBankTab();
 
@@ -85,12 +87,12 @@ function Create() {
         likes: parsed.data.likes,
       };
 
-      await createBankTab.mutateAsync(payload);
-      //reload page
-      window.location.pathname = '/';
-      setMessage('Bank tab created!');
-      // Optionally clear selections
-      // setSelectedTags([]);
+      const result = await createBankTab.mutateAsync(payload);
+
+      //redirect to the newly created bank tab page
+      navigate(`/banktab/${result.id}`);
+
+      setMessage('Bank tab created successfully!');
     } catch (err) {
       console.error('Submit failed:', err);
       setMessage('Failed to create bank tab.');
@@ -115,15 +117,16 @@ function Create() {
         <BankTagForm layout={layout} icon={icon} tagName={tagName} />
         <BankTabDisplay itemIds={itemIds ? itemIds : []} />
         <TagsDisplay selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+        <Button
+          className="submit-box"
+          style={{ gridArea: 'box-submit' }}
+          size="sm"
+          disabled={!isValid || selectedTags.length === 0 || createBankTab.isPending}
+          onClick={handleSubmit}
+        >
+          Submit
+        </Button>
       </div>
-
-      <Button
-        size="sm"
-        disabled={!isValid || selectedTags.length === 0 || createBankTab.isPending}
-        onClick={handleSubmit}
-      >
-        Submit
-      </Button>
     </div>
   );
 }

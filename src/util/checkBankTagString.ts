@@ -55,20 +55,7 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
     }
   }
 
-  // If valid, slice itemIds from the 4th element (index 4) up to 'layout' or end
-  let startIdx = 4; // start after icon id
-  const endIdx = tagStringArr.length - 1; // 15 - 1 = 14
-  const layoutIdx = tagStringArr.indexOf('layout', startIdx); // 7
-  let itemIds: string[] = [];
-
-  if (layoutIdx !== -1) {
-    startIdx = layoutIdx + 2; // 9
-    for (let i = startIdx; i < tagStringArr.length; i += 2) {
-      itemIds.push(tagStringArr[i]);
-    }
-  } else {
-    itemIds = tagStringArr.slice(startIdx, endIdx);
-  }
+  const itemIds = generateItemIds(tagStringArr);
 
   return {
     result: { isValid: true },
@@ -77,6 +64,23 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
     tagName: tagStringArr[2],
     itemIds,
   };
+}
+
+export function generateItemIds(importStringArray: string[]): string[] {
+  let itemIds: string[] = [];
+  let startIdx = 4; // start after icon id
+  const endIdx = importStringArray.length - 1;
+  const layoutIdx = importStringArray.indexOf('layout', startIdx);
+  if (layoutIdx !== -1) {
+    startIdx = layoutIdx + 2;
+    for (let i = startIdx; i < importStringArray.length; i += 2) {
+      itemIds.push(importStringArray[i]);
+    }
+  } else {
+    itemIds = importStringArray.slice(startIdx, endIdx);
+  }
+
+  return itemIds;
 }
 
 function bankTagStringToArray(tag: string): string[] {
