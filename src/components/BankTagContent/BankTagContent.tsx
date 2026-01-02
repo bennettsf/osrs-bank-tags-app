@@ -19,7 +19,7 @@ const testData: BankTagData[] = [
 
 function BankTagContent() {
   return (
-    <div className="content-container">
+    <div className="content-container" style={{ gridArea: 'content' }}>
       <InputGroup className="search-bar" startElement={<LuSearch />}>
         <Input placeholder="Search Tabs..." />
       </InputGroup>

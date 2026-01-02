@@ -1,0 +1,139 @@
+.bank-tab-container {
+  margin: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1.5rem;
+  padding: 1rem;
+}
+
+.bank-tab-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: yellow;
+}
+
+.bank-tab-content {
+  width: 60%;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto; /* grow rows to fit content */
+  gap: 1.5rem;
+  grid-template-areas:
+    'box-buttons'
+    'box-bank-tab'
+    'box-bank-tab'
+    'box-info';
+}
+
+.bank-tab-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1rem;
+  grid-template-areas: 'box-import box-fav';
+}
+
+.bank-tab-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  gap: 1rem;
+  grid-template-areas: 'box-likes box-date';
+  place-items: center;
+}
+
+/* Explicitly place children into the defined grid areas */
+.bank-tab-import {
+  grid-area: box-import;
+}
+
+.bank-tab-fav {
+  grid-area: box-fav;
+}
+
+.bank-tab-likes {
+  grid-area: box-likes;
+}
+
+.bank-tab-date {
+  grid-area: box-date;
+}
+
+@media (max-width: 56em) {
+  .bank-tab-content {
+    width: 90%;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      'box-buttons'
+      'box-bank-tab'
+      'box-info';
+  }
+  .bank-tab-buttons {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'box-import'
+      'box-fav';
+  }
+  .bank-tab-info {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas:
+      'box-likes'
+      'box-date';
+  }
+}
+
+.grid-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 1rem;
+  border: 1px solid #444;
+  padding: 1rem;
+  border-radius: 10px;
+  position: relative;
+  flex-wrap: wrap; /* allow children to wrap */
+}
+
+/* Make the buttons fill their container width */
+.bank-tab-import > button,
+.bank-tab-fav > button {
+  width: 100%;
+  font-size: 1.3rem;
+}
+
+@keyframes flash {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.icon {
+  transition: transform 0.2s ease;
+}
+.success {
+  color: rgb(0, 255, 0);
+}
+.error {
+  color: rgb(255, 0, 0);
+}
+
+.icon.flash {
+  animation: flash 300ms ease;
+}

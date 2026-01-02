@@ -23,11 +23,11 @@ function BankTagCard({ data }: BankTagCardProps) {
     if (likedItems.includes(tagId)) {
       const updatedItems = likedItems.filter((id: string) => id !== tagId);
       setLikedItems(updatedItems);
-      localStorage.setItem(`liked`, JSON.stringify(updatedItems));
+      localStorage.setItem(`myFavorites`, JSON.stringify(updatedItems));
     } else {
       const updatedItems = [...likedItems, tagId];
       setLikedItems(updatedItems);
-      localStorage.setItem(`liked`, JSON.stringify(updatedItems));
+      localStorage.setItem(`myFavorites`, JSON.stringify(updatedItems));
     }
   };
 

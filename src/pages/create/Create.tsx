@@ -20,6 +20,7 @@ import { TagsEnum, type Tags, CreateSchema } from './models';
 import { FaRegSquarePlus } from 'react-icons/fa6';
 import { useCreateBankTab } from '@/hooks/useCreateBankTab';
 import { useNavigate } from 'react-router-dom';
+import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
 
 function Create() {
   const [importString, setImportString] = useState('');
@@ -139,7 +140,7 @@ function BankTagForm({
   tagName,
 }: Pick<CheckBankTagStringResult, 'layout' | 'icon' | 'tagName'>) {
   return (
-    <div className="result-box" style={{ gridArea: 'box-form' }}>
+    <div className="grid-box" style={{ gridArea: 'box-form' }}>
       <div className="tag-name">
         <Text className="details-text">Name: {tagName ? tagName : null}</Text>
       </div>
@@ -173,26 +174,6 @@ function BankTagForm({
   );
 }
 
-function BankTabDisplay({ itemIds }: { itemIds: string[] }) {
-  return (
-    <div className="result-box" style={{ gridArea: 'box-bank-tab' }}>
-      <Text className="details-text" style={{ width: '100%', borderBottom: '1px solid #fff' }}>
-        Bank Tab Preview:
-      </Text>
-      <div className="items-box hide-scrollbar">
-        {/* Item icons will render here starting top-left */}
-        {itemIds.map((itemId) => (
-          <img
-            key={itemId}
-            src={`https://static.runelite.net/cache/item/icon/${itemId}.png`}
-            alt={`https://static.runelite.net/cache/item/icon/952.png`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
 function TagsDisplay({
   selectedTags,
   setSelectedTags,
@@ -210,7 +191,7 @@ function TagsDisplay({
     }
   };
   return (
-    <div className="result-box" style={{ gridArea: 'box-tags' }}>
+    <div className="grid-box" style={{ gridArea: 'box-tags' }}>
       <Fieldset.Root>
         <CheckboxGroup
           name="tags"
@@ -268,7 +249,7 @@ function TagsDisplay({
 
 // function LayoutEnabled({ layout }: Pick<CheckBankTagStringResult, 'layout'>) {
 //   return (
-//     <div className="result-box" style={{ gridArea: 'box-layout' }}>
+//     <div className="grid-box" style={{ gridArea: 'box-layout' }}>
 //       <Text className="details-text">
 //         Layout Enabled:{' '}
 //         {layout ? <RxCheck color="green" /> : layout === false ? <RxCross2 color="red" /> : null}
@@ -287,7 +268,7 @@ function TagsDisplay({
 
 // function IconDisplay({ icon }: Pick<CheckBankTagStringResult, 'icon'>) {
 //   return (
-//     <div className="result-box" style={{ gridArea: 'box-icon' }}>
+//     <div className="grid-box" style={{ gridArea: 'box-icon' }}>
 //       <Text className="details-text">
 //         Icon:{' '}
 //         {icon ? (
@@ -304,7 +285,7 @@ function TagsDisplay({
 
 // function NameDisplay({ tagName }: Pick<CheckBankTagStringResult, 'tagName'>) {
 //   return (
-//     <div className="result-box" style={{ gridArea: 'box-name' }}>
+//     <div className="grid-box" style={{ gridArea: 'box-name' }}>
 //       <Text className="details-text">Name: {tagName ? tagName : null}</Text>
 //     </div>
 //   );

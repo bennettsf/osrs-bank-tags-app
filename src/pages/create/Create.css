@@ -71,7 +71,7 @@
   border-color: #e74c3c; /* red */
 }
 
-.result-box {
+.grid-box {
   display: flex;
   flex-direction: column;
   align-items: flex-start;

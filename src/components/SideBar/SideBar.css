@@ -3,7 +3,8 @@
   grid-template-rows: auto 1fr;
   border-right: 1px solid #444;
   height: 100%;
-  overflow: hidden; /* prevent sidebar from scrolling */
+  position: relative;
+  overflow: visible; /* ensure dropdown isn't clipped */
 }
 
 .sidebar-items {
@@ -49,4 +50,60 @@
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
+}
+
+/* default: wide screens show the sidebar items, hide the toggle */
+.sidebar-toggle {
+  display: none;
+}
+
+.sidebar-items {
+  display: block; /* visible on wide screens */
+}
+
+/* small screens: collapse into hamburger */
+@media (max-width: 42em) {
+  .sidebar-toggle {
+    display: inline-flex;
+    gap: 0.5rem;
+    align-items: center;
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    margin-top: 20px;
+    background: #222;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .sidebar-items {
+    display: none; /* hidden until toggled */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #111;
+
+    padding: 0.5rem;
+    z-index: 1000; /* ensure it appears above layout */
+    max-height: 70vh;
+    overflow: auto;
+  }
+
+  .sidebar-items.open {
+    display: block; /* show when toggled */
+  }
+
+  .sidebar-items ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .sidebar-items li a {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0.25rem;
+  }
 }
