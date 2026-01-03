@@ -9,13 +9,7 @@ export async function filterBankTabs(category: string): Promise<BankTabResponse[
     query = query.contains('tags', [category]);
   }
 
-  //   // Search by name OR exact tag match
-  //   if (searchString.trim() !== '') {
-  //     query = query.or(`name.ilike.%${searchString}%,tags.cs.{${searchString}}`);
-  //   }
-
   const { data, error } = await query;
-  console.log('Filtered Data:', data);
 
   if (error) {
     throw error;

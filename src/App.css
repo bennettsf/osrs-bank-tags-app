@@ -5,8 +5,5 @@
 }
 
 .app-container main {
-  flex: 1;
-  /* Offset fixed nav height so content isn't hidden */
-  padding-top: 60px;
-  min-height: 0;
+  padding: 0;
 }

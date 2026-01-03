@@ -29,7 +29,7 @@ function SideBar({ navItems, selectedCategory, setSelectedCategory }: SideBarPro
         onClick={toggleMenu}
       >
         {isOpen ? <MdClose /> : <MdMenu />}
-        <span>Menu</span>
+        <span>Categories</span>
       </button>
 
       <div id="sidebar-nav" className={`sidebar-items ${isOpen ? 'open' : ''}`}>

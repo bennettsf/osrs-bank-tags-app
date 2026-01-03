@@ -139,11 +139,12 @@
 }
 
 .center-message {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  min-height: 40vh;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  height: 200px;
 }
 
 .loading-text {

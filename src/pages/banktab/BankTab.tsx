@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useGetBankTab } from '@/hooks/useGetBankTab';
 import { generateItemIds } from '@/util/checkBankTagString';
 import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
-import { Button } from '@chakra-ui/react';
+import { Button, Spinner } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 import { RxCross1 } from 'react-icons/rx';
@@ -18,7 +18,11 @@ function BankTab() {
   const [copySuccess, setCopySuccess] = useState<boolean | null>(null);
 
   if (isPending) {
-    return <p className="center-message loading-text">Loading bank tab...</p>;
+    return (
+      <p className="center-message loading-text">
+        Loading bank tab... <Spinner size="lg" color="colorPalette.600" colorPalette="yellow" />
+      </p>
+    );
   }
 
   if (isError || !tabData) {

@@ -1,4 +1,4 @@
-import { Input, InputGroup } from '@chakra-ui/react';
+import { Input, InputGroup, Spinner } from '@chakra-ui/react';
 import BankTagCard from '../BankTagCard/BankTagCard';
 import { LuSearch } from 'react-icons/lu';
 import './BankTagContent.css';
@@ -23,7 +23,6 @@ interface BankTagContentProps {
 
 function BankTagContent({ selectedCategory }: BankTagContentProps) {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  console.log(selectedCategory);
   const { data: categoryData, isPending, error } = useFilterBankTabs(selectedCategory);
 
   const visibleData = useMemo(() => {
@@ -41,15 +40,21 @@ function BankTagContent({ selectedCategory }: BankTagContentProps) {
 
   return (
     <div className="content-container" style={{ gridArea: 'content' }}>
-      <InputGroup className="search-bar" startElement={<LuSearch />}>
-        <Input
-          placeholder="Search Tabs..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
-      </InputGroup>
+      <div className="search-bar">
+        <InputGroup startElement={<LuSearch />}>
+          <Input
+            placeholder="Search Tabs..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </InputGroup>
+      </div>
 
-      {isPending && <p className="center-message loading-text">Loading bank tags...</p>}
+      {isPending && (
+        <p className="center-message loading-text">
+          <Spinner size="lg" color="colorPalette.600" colorPalette="yellow" />
+        </p>
+      )}
 
       {error && <p className="center-message error-text">Error loading bank tags.</p>}
 
