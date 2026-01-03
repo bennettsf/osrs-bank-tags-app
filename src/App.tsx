@@ -1,12 +1,12 @@
 import './App.css';
 
-import Nav from './components/NavBar/Nav';
+import NavBar from './components/NavBar/NavBar';
 import { Outlet } from 'react-router-dom';
 
 function App() {
   return (
     <div className="app-container">
-      <Nav />
+      <NavBar />
       <main>
         <Outlet />
       </main>
