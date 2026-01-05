@@ -37,7 +37,8 @@ export function BankTabDisplay({
           <img
             key={i}
             src={`https://static.runelite.net/cache/item/icon/${itemId}.png`}
-            alt={`https://static.runelite.net/cache/item/icon/952.png`}
+            alt={`Item ${itemId}`}
+            title={`Item ${itemId}`}
             style={{ gridArea: layout ? `${Object.values(indexToRowColumn(i, importString)).join("/")}` : "unset" }}
           />
         ))}
