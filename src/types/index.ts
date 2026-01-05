@@ -14,6 +14,7 @@ export type CreateBankTagPayload = {
   layout: boolean;
   tags: string[];
   likes?: number;
+  edit_passkey?: string;
 };
 
 export const BankTabResponseSchema = z.object({

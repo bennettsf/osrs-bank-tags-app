@@ -8,6 +8,7 @@ import {
   For,
   Input,
   Group,
+  Switch,
 } from '@chakra-ui/react';
 import './ImportTab.css';
 import '../../index.css';
@@ -25,9 +26,11 @@ function Create() {
   const [message, setMessage] = useState<string | undefined>(undefined);
   const [icon, setIcon] = useState<string | null>(null);
   const [layout, setLayout] = useState<boolean | null>(null);
-  const [tagName, setTagName] = useState<string | null>(null);
+  const [name, setName] = useState<string | null>(null);
   const [selectedTags, setSelectedTags] = useState<Tags[]>([]);
   const [itemIds, setItemIds] = useState<string[] | null>(null);
+  const [passkey, setPasskey] = useState<string>('');
+
   const navigate = useNavigate();
 
   const createBankTab = useCreateBankTab();
@@ -40,7 +43,7 @@ function Create() {
       setIsValid(validation.result.isValid);
       setLayout(validation.layout);
       setIcon(validation.icon);
-      setTagName(validation.tagName);
+      setName(validation.name);
       setItemIds(validation.itemIds);
       if (validation.result.message && !validation.result.isValid) {
         setMessage(validation.result.message);
@@ -54,19 +57,19 @@ function Create() {
 
   const handleSubmit = async () => {
     try {
-      if (!isValid || !icon || !tagName) {
+      if (!isValid || !icon || !name) {
         setMessage('Please import a valid bank tag first.');
         return;
       }
 
       // add tagName to array,change tags to lowercase and remove duplicates
-      const selectedTagsWithName = [...selectedTags, tagName];
+      const selectedTagsWithName = [...selectedTags, name];
       const selectedTagsSet = new Set(selectedTagsWithName.map((tag) => tag.toLowerCase()));
       const finalTags = Array.from(selectedTagsSet);
 
       const toValidate = {
         icon: icon,
-        tagName: tagName,
+        name: name,
         importString: importString,
         layout: !!layout,
         tags: finalTags,
@@ -82,7 +85,7 @@ function Create() {
       }
 
       const payload = {
-        name: parsed.data.tagName,
+        name: parsed.data.name,
         icon: parsed.data.icon,
         import_string: parsed.data.importString,
         layout: parsed.data.layout,
@@ -91,6 +94,7 @@ function Create() {
       };
 
       const result = await createBankTab.mutateAsync(payload);
+      console.log('Create result:', result);
 
       //redirect to the newly created bank tab page
       navigate(`/banktab/${result.id}`);
@@ -117,13 +121,14 @@ function Create() {
       />
 
       <div className="result-container">
-        <BankTagForm icon={icon} tagName={tagName} />
+        <BankTagForm icon={icon} name={name} />
         <BankTabDisplay
           itemIds={itemIds ?? []}
           layout={layout ?? false}
           importString={importString ?? ''}
         />
         <TagsDisplay selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
+        <BankTagPasskey passkey={passkey} setPasskey={setPasskey} />
         <Button
           className="submit-box"
           style={{ gridArea: 'box-submit' }}
@@ -141,12 +146,41 @@ function Create() {
 
 export default Create;
 
-function BankTagForm({ icon, tagName }: Pick<CheckBankTagStringResult, 'icon' | 'tagName'>) {
+function BankTagPasskey({
+  passkey,
+  setPasskey,
+}: {
+  passkey: string;
+  setPasskey: React.Dispatch<React.SetStateAction<string>>;
+}) {
+  const [checked, setChecked] = useState(false);
+  return (
+    <div className="grid-box" style={{ gridArea: 'box-passkey' }}>
+      <Switch.Root checked={checked} onCheckedChange={(e) => setChecked(e.checked)}>
+        <Switch.HiddenInput />
+        <Switch.Control />
+        <Switch.Label fontSize={'xl'}>Enable Passkey</Switch.Label>
+        <Input
+          fontSize="2xl"
+          height="45px"
+          variant="subtle"
+          placeholder="Create Passkey"
+          value={passkey}
+          onChange={(e) => setPasskey(e.target.value)}
+          disabled={!checked}
+          focusRingColor={'#eab308'}
+        />
+      </Switch.Root>
+    </div>
+  );
+}
+
+function BankTagForm({ icon, name }: Pick<CheckBankTagStringResult, 'icon' | 'name'>) {
   return (
     <div className="grid-box" style={{ gridArea: 'box-form' }}>
       <div className="tag-name">
         <Text className="details-text">
-          Name: <span className="detail">{tagName ? tagName : null}</span>
+          Name: <span className="detail">{name ? name : null}</span>
         </Text>
       </div>
       <div className="tag-icon">

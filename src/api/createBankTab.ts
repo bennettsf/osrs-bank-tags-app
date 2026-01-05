@@ -1,7 +1,9 @@
 import supabase from '@/supabase';
 import type { CreateBankTagPayload } from '@/types';
 
-export async function createBankTab(payload: CreateBankTagPayload) {
+export async function createBankTab(
+  payload: CreateBankTagPayload
+): Promise<{ id: number }> {
   const { data, error } = await supabase
     .from('bank_tabs')
     .insert([
@@ -10,7 +12,7 @@ export async function createBankTab(payload: CreateBankTagPayload) {
         likes: 0,
       },
     ])
-    .select()
+    .select('id')
     .single();
   if (error) {
     throw error;

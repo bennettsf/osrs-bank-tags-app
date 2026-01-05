@@ -110,7 +110,7 @@
   grid-template-areas:
     'box-form      box-bank-tab'
     'box-tags     box-bank-tab'
-    'box-tags     box-bank-tab'
+    'box-passkey     box-bank-tab'
     'box-submit   box-bank-tab';
 }
 
@@ -118,11 +118,12 @@
   .result-container {
     width: 80%;
     grid-template-columns: 1fr;
-    grid-template-rows: auto auto auto auto;
+    grid-template-rows: auto auto auto auto auto; /* grow rows to fit content */
     grid-template-areas:
       'box-form'
       'box-bank-tab'
       'box-tags'
+      'box-passkey'
       'box-submit';
   }
 

@@ -16,7 +16,7 @@ export interface CheckBankTagStringResult {
   };
   layout: boolean | null;
   icon: string | null;
-  tagName: string | null;
+  name: string | null;
   itemIds: string[] | null;
 }
 
@@ -36,7 +36,7 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
       result: { isValid: false, message: 'Invalid header or length' },
       layout: null,
       icon: null,
-      tagName: null,
+      name: null,
       itemIds: null,
     };
   }
@@ -54,7 +54,7 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
         result: { isValid: false, message: 'Invalid number or not a 32-bit signed integer' },
         layout: null,
         icon: null,
-        tagName: null,
+        name: null,
         itemIds: null,
       };
     }
@@ -66,7 +66,7 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
     result: { isValid: true },
     layout,
     icon: tagStringArr[3],
-    tagName: tagStringArr[2],
+    name: tagStringArr[2],
     itemIds,
   };
 }
@@ -89,7 +89,7 @@ export function generateItemIds(importStringArray: string[]): string[] {
 }
 
 export function indexToRowColumn(itemIndex: number, importString: string) {
-  const tokens = importString.split("layout,")[1].split(','); // [positionIndex, itemId, positionIndex, itemId, ...]
+  const tokens = importString.split('layout,')[1].split(','); // [positionIndex, itemId, positionIndex, itemId, ...]
   const positionIndex = parseInt(tokens[itemIndex * 2]);
 
   return { row: Math.floor(positionIndex / 8) + 1, column: (positionIndex % 8) + 1 };
