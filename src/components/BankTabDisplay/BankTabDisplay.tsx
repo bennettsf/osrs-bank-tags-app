@@ -4,8 +4,7 @@ import { FaRegQuestionCircle } from 'react-icons/fa';
 import './BankTabDisplay.css';
 import { indexToRowColumn } from '@/util/bankTagStringHelper';
 
-const toolTipContent = `Enabling layout will show the items in the custom tab as if they were in one single tab, rather than split into multiple custom tabs provided by Jagex, assuming you use those as well.
-        This can be toggled by right clicking your custom tab in-game and selecting 'Enable Layout'.`;
+const toolTipContent = `Enabling layout allows you to reorder items by dragging them to any slot. This can be toggled by right clicking your custom tab in-game and selecting 'Enable Layout'.`;
 
 export function BankTabDisplay({
   itemIds,
