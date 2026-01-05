@@ -11,7 +11,7 @@ import {
 } from '@chakra-ui/react';
 import './ImportTab.css';
 import '../../index.css';
-import { checkBankTagString, type CheckBankTagStringResult } from '@/util/checkBankTagString';
+import { checkBankTagString, type CheckBankTagStringResult } from '@/util/bankTagStringHelper';
 import { useState } from 'react';
 import { TagsEnum, type Tags, CreateSchema } from './models';
 import { FaRegSquarePlus } from 'react-icons/fa6';

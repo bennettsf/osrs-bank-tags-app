@@ -4,6 +4,11 @@
  22114,7,2564,8,7462,9,4151,10,20232,11,542,12,3105,13,1035,14,3144,15,2552,16,2558,17,2556
  */
 
+/**
+ * Example of a valid bank tag string with layout enabled:
+ banktags,1,aga,31054,layout,0,946,22,1517,41,851,42,851
+ */
+
 export interface CheckBankTagStringResult {
   result: {
     isValid?: boolean;
@@ -81,6 +86,13 @@ export function generateItemIds(importStringArray: string[]): string[] {
   }
 
   return itemIds;
+}
+
+export function indexToRowColumn(itemIndex: number, importString: string) {
+  const tokens = importString.split("layout,")[1].split(','); // [positionIndex, itemId, positionIndex, itemId, ...]
+  const positionIndex = parseInt(tokens[itemIndex * 2]);
+
+  return { row: Math.floor(positionIndex / 8) + 1, column: (positionIndex % 8) + 1 };
 }
 
 function bankTagStringToArray(tag: string): string[] {

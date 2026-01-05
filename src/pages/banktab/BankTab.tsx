@@ -1,7 +1,7 @@
 import './BankTab.css';
 import { useParams } from 'react-router-dom';
 import { useGetBankTab } from '@/hooks/useGetBankTab';
-import { generateItemIds } from '@/util/checkBankTagString';
+import { generateItemIds } from '@/util/bankTagStringHelper';
 import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
 import { Button, Spinner } from '@chakra-ui/react';
 import { useState } from 'react';
@@ -15,7 +15,7 @@ function BankTab() {
   const itemIds = tabData ? generateItemIds(tabData.import_string.split(',')) : [];
   const [copySuccess, setCopySuccess] = useState<boolean | null>(null);
   const { toggleFavorite, isFavorite } = useFavorites();
-  
+
   if (isPending) {
     return (
       <p className="center-message loading-text">
