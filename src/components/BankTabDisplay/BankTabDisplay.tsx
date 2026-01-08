@@ -15,14 +15,17 @@ export function BankTabDisplay({
   layout: boolean;
   importString: string;
 }) {
-  console.log(importString);
   return (
-    <div className="grid-box" style={{ gridArea: "box-bank-tab" }}>
+    <div className="grid-box" style={{ gridArea: 'box-bank-tab' }}>
       <div className="display-header">
         <Text className="details-text">Preview:</Text>
         <Text className="bank-tab-layout">
           <span>Layout: </span>
-          {layout ? <span style={{ color: "lime" }}>ENABLED</span> : <span style={{ color: "red" }}>DISABLED</span>}
+          {layout ? (
+            <span style={{ color: 'lime' }}>ENABLED</span>
+          ) : (
+            <span style={{ color: 'red' }}>DISABLED</span>
+          )}
           <span className="info-icon">
             <Tooltip content={toolTipContent}>
               <FaRegQuestionCircle />
@@ -38,7 +41,11 @@ export function BankTabDisplay({
             src={`https://static.runelite.net/cache/item/icon/${itemId}.png`}
             alt={`Item ${itemId}`}
             title={`Item ${itemId}`}
-            style={{ gridArea: layout ? `${Object.values(indexToRowColumn(i, importString)).join("/")}` : "unset" }}
+            style={{
+              gridArea: layout
+                ? `${Object.values(indexToRowColumn(i, importString)).join('/')}`
+                : 'unset',
+            }}
           />
         ))}
       </div>

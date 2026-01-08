@@ -1,21 +1,18 @@
-import supabase from '@/supabase';
 import type { CreateBankTagPayload } from '@/types';
 
-export async function createBankTab(
-  payload: CreateBankTagPayload
-): Promise<{ id: number }> {
-  const { data, error } = await supabase
-    .from('bank_tabs')
-    .insert([
-      {
-        ...payload,
-        likes: 0,
-      },
-    ])
-    .select('id')
-    .single();
-  if (error) {
-    throw error;
+export async function createBankTab(payload: CreateBankTagPayload): Promise<{ id: string }> {
+  const res = await fetch('/api/bankTabs', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    throw new Error('Failed to create bank tab');
   }
-  return data;
+
+  console.log('Create bank tab response status:', res.status);
+  console.log('Create bank tab response body:', await res.text());
+
+  return res.json(); // { id }
 }
