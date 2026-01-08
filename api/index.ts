@@ -1,5 +1,5 @@
 import { OpenAPIHono } from '@hono/zod-openapi';
-import { bankTabs } from './bankTabs';
+import bankTabs from './bank-tabs';
 
 const app = new OpenAPIHono();
 

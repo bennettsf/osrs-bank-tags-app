@@ -1,7 +1,7 @@
 import type { CreateBankTagPayload } from '@/types';
 
-export async function createBankTab(payload: CreateBankTagPayload): Promise<{ id: string }> {
-  const res = await fetch('/api/bankTabs', {
+export async function createBankTab(payload: CreateBankTagPayload): Promise<{ id: number }> {
+  const res = await fetch('/api/bank-tabs', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload),
@@ -11,8 +11,8 @@ export async function createBankTab(payload: CreateBankTagPayload): Promise<{ id
     throw new Error('Failed to create bank tab');
   }
 
-  console.log('Create bank tab response status:', res.status);
-  console.log('Create bank tab response body:', await res.text());
+  const json = await res.json();
+  console.log('Create bank tab response status:', res.status, 'body:', json);
 
-  return res.json(); // { id }
+  return json; // { id: number }
 }
