@@ -4,6 +4,10 @@ import { supabase } from '../lib/supabase.ts';
 
 export const bankTabs = new OpenAPIHono();
 
+bankTabs.get('/', (c) => {
+  return c.json({ ok: true, message: 'bank-tabs endpoint alive' });
+});
+
 const BankTabSchema = z
   .object({
     id: z.number().optional().openapi({ description: 'The ID of the bank tab', example: 1 }),
