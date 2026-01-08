@@ -1,6 +1,6 @@
 import { OpenAPIHono, createRoute, z } from '@hono/zod-openapi';
-import { hashPasskey } from '../lib/auth.ts';
-import { supabase } from '../lib/supabase.ts';
+import { hashPasskey } from '../lib/auth';
+import { supabase } from '../lib/supabase';
 
 export const bankTabs = new OpenAPIHono();
 
