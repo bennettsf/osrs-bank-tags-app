@@ -2,24 +2,16 @@ import BankTagContent from '@/components/BankTagContent/BankTagContent';
 import SideBar from '@/components/SideBar/SideBar';
 import './HomePage.css';
 import { useState } from 'react';
-const testNav: string[] = [
-  '',
-  'PvM',
-  'PvP',
-  'Skilling',
-  'Clue',
-  'Minigame',
-  'Quest',
-  'Miscellaneous',
-];
+import { TagsEnum } from '@/types';
 
 function HomePage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const navItems = ['', ...TagsEnum.options];
 
   return (
     <div className="home-container">
       <SideBar
-        navItems={testNav}
+        navItems={navItems} // '' represents 'All Tags'
         selectedCategory={selectedCategory}
         setSelectedCategory={setSelectedCategory}
       />

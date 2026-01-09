@@ -1,21 +1,15 @@
 import { z } from 'zod';
 
-export type BankTagData = {
-  tagId: string;
-  tagName: string;
-  tagString: string;
-  tagTags: string[];
-};
-
-export type CreateBankTagPayload = {
-  name: string;
-  icon: string;
-  import_string: string;
-  layout: boolean;
-  tags: string[];
-  likes?: number;
-  edit_passkey?: string;
-};
+export const TagsEnum = z.enum([
+  'PvM',
+  'PvP',
+  'Skilling',
+  'Clue',
+  'Minigame',
+  'Quest',
+  'Miscellaneous',
+]);
+export type Tags = z.infer<typeof TagsEnum>;
 
 export const BankTabResponseSchema = z.object({
   id: z.number(),
