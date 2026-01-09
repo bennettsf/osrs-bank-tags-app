@@ -14,22 +14,31 @@ import './ImportTab.css';
 import '../../index.css';
 import { checkBankTagString, type CheckBankTagStringResult } from '@/util/bankTagStringHelper';
 import { useState } from 'react';
-import { TagsEnum, type Tags, CreateSchema } from './models';
+import { CreateBankTabSchema } from './models';
 import { FaRegSquarePlus } from 'react-icons/fa6';
 import { useCreateBankTab } from '@/hooks/useCreateBankTab';
 import { useNavigate } from 'react-router-dom';
 import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
+import { TagsEnum, type Tags } from '@/types';
 
 function Create() {
   const [importString, setImportString] = useState('');
   const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
-  const [message, setMessage] = useState<string | undefined>(undefined);
-  const [icon, setIcon] = useState<string | null>(null);
-  const [layout, setLayout] = useState<boolean | null>(null);
-  const [name, setName] = useState<string | null>(null);
-  const [selectedTags, setSelectedTags] = useState<Tags[]>([]);
-  const [itemIds, setItemIds] = useState<string[] | null>(null);
-  const [passkey, setPasskey] = useState<string>('');
+  const [message, setMessage] = useState<string | undefined>(' ');
+  const [icon, setIcon] = useState<string | undefined>(undefined);
+  const [layout, setLayout] = useState<boolean | undefined>(undefined);
+  const [name, setName] = useState<string | undefined>(undefined);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [itemIds, setItemIds] = useState<string[] | undefined>(undefined);
+  const [passkey, setPasskey] = useState<string | null>(null);
+
+  console.log('Selected Tags:', selectedTags);
+  console.log('Item IDs:', itemIds);
+  console.log('Layout:', layout);
+  console.log('Icon:', icon);
+  console.log('Name:', name);
+  console.log('Passkey:', passkey);
+  console.log('Import String:', importString);
 
   const navigate = useNavigate();
 
@@ -57,7 +66,7 @@ function Create() {
 
   const handleSubmit = async () => {
     try {
-      if (!isValid || !icon || !name) {
+      if (!isValid || !icon || !name || !layout) {
         setMessage('Please import a valid bank tag first.');
         return;
       }
@@ -68,15 +77,15 @@ function Create() {
       const finalTags = Array.from(selectedTagsSet);
 
       const toValidate = {
-        icon: icon,
         name: name,
-        importString: importString,
-        layout: !!layout,
+        icon: icon,
+        import_string: importString,
+        layout: layout,
         tags: finalTags,
-        likes: 0,
+        edit_passkey: passkey ? passkey : null,
       };
 
-      const parsed = CreateSchema.safeParse(toValidate);
+      const parsed = CreateBankTabSchema.safeParse(toValidate);
       if (!parsed.success) {
         const firstErr = parsed.error.issues[0]?.message ?? 'Invalid form data';
 
@@ -87,10 +96,10 @@ function Create() {
       const payload = {
         name: parsed.data.name,
         icon: parsed.data.icon,
-        import_string: parsed.data.importString,
+        import_string: parsed.data.import_string,
         layout: parsed.data.layout,
         tags: parsed.data.tags,
-        likes: parsed.data.likes,
+        edit_passkey: passkey ? passkey : null,
       };
 
       const result = await createBankTab.mutateAsync(payload);
@@ -128,7 +137,7 @@ function Create() {
           importString={importString ?? ''}
         />
         <TagsDisplay selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
-        <BankTagPasskey passkey={passkey} setPasskey={setPasskey} />
+        <BankTagPasskey passkey={passkey ? passkey : ''} setPasskey={setPasskey} />
         <Button
           className="submit-box"
           style={{ gridArea: 'box-submit' }}
@@ -151,7 +160,7 @@ function BankTagPasskey({
   setPasskey,
 }: {
   passkey: string;
-  setPasskey: React.Dispatch<React.SetStateAction<string>>;
+  setPasskey: React.Dispatch<React.SetStateAction<string | null>>;
 }) {
   const [checked, setChecked] = useState(false);
   return (
@@ -160,17 +169,17 @@ function BankTagPasskey({
         <Switch.HiddenInput />
         <Switch.Control />
         <Switch.Label fontSize={'xl'}>Enable Passkey</Switch.Label>
-        <Input
-          fontSize="2xl"
-          height="45px"
-          variant="subtle"
-          placeholder="Create Passkey"
-          value={passkey}
-          onChange={(e) => setPasskey(e.target.value)}
-          disabled={!checked}
-          focusRingColor={'#eab308'}
-        />
       </Switch.Root>
+      <Input
+        fontSize="2xl"
+        height="45px"
+        variant="subtle"
+        placeholder="Create Passkey"
+        value={passkey}
+        onChange={(e) => setPasskey(e.target.value)}
+        disabled={!checked}
+        focusRingColor={'#eab308'}
+      />
     </div>
   );
 }
@@ -203,15 +212,16 @@ function TagsDisplay({
   selectedTags,
   setSelectedTags,
 }: {
-  selectedTags: Tags[];
-  setSelectedTags: React.Dispatch<React.SetStateAction<Tags[]>>;
+  selectedTags: string[];
+  setSelectedTags: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   const [selectableTags, setSelectableTags] = useState<string[]>([...TagsEnum.options]);
   const [customTag, setCustomTag] = useState<string>('');
 
   const handleAddCustomTag = (tag: string) => {
     if (tag && !selectableTags.includes(tag)) {
-      setSelectableTags((prev) => [...prev, tag as Tags]);
+      setSelectableTags((prev) => [...prev, tag]);
+      setSelectedTags((prev) => [...prev, tag]);
       setCustomTag('');
     }
   };

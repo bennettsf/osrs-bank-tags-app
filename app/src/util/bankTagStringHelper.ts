@@ -14,10 +14,10 @@ export interface CheckBankTagStringResult {
     isValid?: boolean;
     message?: string;
   };
-  layout: boolean | null;
-  icon: string | null;
-  name: string | null;
-  itemIds: string[] | null;
+  layout?: boolean;
+  icon?: string;
+  name?: string;
+  itemIds: string[];
 }
 
 export function checkBankTagString(tag: string): CheckBankTagStringResult {
@@ -34,10 +34,10 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
   ) {
     return {
       result: { isValid: false, message: 'Invalid header or length' },
-      layout: null,
-      icon: null,
-      name: null,
-      itemIds: null,
+      layout: undefined,
+      icon: undefined,
+      name: undefined,
+      itemIds: [],
     };
   }
 
@@ -52,10 +52,10 @@ export function checkBankTagString(tag: string): CheckBankTagStringResult {
     if (!Number.isFinite(Number(item)) || !is32BitSignedInteger(Number(item))) {
       return {
         result: { isValid: false, message: 'Invalid number or not a 32-bit signed integer' },
-        layout: null,
-        icon: null,
-        name: null,
-        itemIds: null,
+        layout: undefined,
+        icon: undefined,
+        name: undefined,
+        itemIds: [],
       };
     }
   }
