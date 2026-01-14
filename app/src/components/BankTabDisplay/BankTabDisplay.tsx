@@ -34,20 +34,22 @@ export function BankTabDisplay({
         </Text>
       </div>
 
-      <div className="items-box-layout hide-scrollbar">
-        {itemIds.map((itemId, i) => (
-          <img
-            key={i}
-            src={`https://static.runelite.net/cache/item/icon/${itemId}.png`}
-            alt={`Item ${itemId}`}
-            title={`Item ${itemId}`}
-            style={{
-              gridArea: layout
-                ? `${Object.values(indexToRowColumn(i, importString)).join('/')}`
-                : 'unset',
-            }}
-          />
-        ))}
+      <div className="items-box-container">
+        <div className="items-box-layout hide-scrollbar">
+          {itemIds.map((itemId, i) => (
+            <img
+              key={i}
+              src={`https://static.runelite.net/cache/item/icon/${itemId}.png`}
+              alt={`Item ${itemId}`}
+              title={`Item ${itemId}`}
+              style={{
+                gridArea: layout
+                  ? `${Object.values(indexToRowColumn(i, importString)).join('/')}`
+                  : 'unset',
+              }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

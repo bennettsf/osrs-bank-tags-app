@@ -24,43 +24,29 @@
   gap: 8px; /* small spacing between text and status */
 }
 
-.items-box {
+.items-box-container {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 1.03rem;
-  max-height: 340px;
-  overflow-y: auto; /* scroll vertically when overflowing */
-}
-
-.items-box img {
-  width: 40px;
-  height: 40px;
-  object-fit: contain;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid #343434;
 }
 
 .items-box-layout {
   display: grid;
-  width: 100%;
-  grid-auto-rows: 1fr;
-  grid-template-columns: repeat(8, 1fr);
+  width: max-content;
+  grid-auto-rows: 50px;
+  grid-template-columns: repeat(8, 50px);
   height: 360px;
   overflow-y: auto;
-  border: 1px solid #343434;
-  flex-grow: 1;
-  /* center items in each grid cell */
-  justify-items: center;
-  align-items: center;
+  gap: 20px;
 }
 
 /* make sure each image centers itself within its grid cell */
 .items-box-layout img {
-  width: 50px;
-  height: 50px;
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-}
 
-.items-box-layout > * {
   aspect-ratio: 1 / 1;
 }
 

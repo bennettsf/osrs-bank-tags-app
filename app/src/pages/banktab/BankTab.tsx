@@ -44,7 +44,7 @@ function BankTab() {
     <div className="bank-tab-container">
       <h1 className="bank-tab-title">{tabData.name}</h1>
       <div className="bank-tab-content">
-        <div className="bank-tab-buttons" style={{ gridArea: 'box-buttons' }}>
+        <div className="bank-tab-buttons">
           <div className="bank-tab-import">
             <Button onClick={handleCopyImportString}>
               Copy Import String{' '}
