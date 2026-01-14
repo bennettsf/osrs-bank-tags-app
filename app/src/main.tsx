@@ -22,7 +22,7 @@ const router = createBrowserRouter([
       { path: 'import', element: <ImportTab /> },
       { path: 'banktab/:tabId', element: <BankTab /> },
       { path: 'favorites', element: <Favorites /> },
-      { path: 'info', element: <Tutorial /> },
+      { path: 'help', element: <Tutorial /> },
     ],
   },
 ]);

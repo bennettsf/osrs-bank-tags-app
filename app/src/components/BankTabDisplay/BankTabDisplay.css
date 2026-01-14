@@ -42,8 +42,7 @@
 .items-box-layout {
   display: grid;
   width: 100%;
-  grid-auto-rows: 40px;
-  grid-auto-columns: 40px;
+  grid-auto-rows: 1fr;
   grid-template-columns: repeat(8, 1fr);
   height: 360px;
   overflow-y: auto;
@@ -56,9 +55,13 @@
 
 /* make sure each image centers itself within its grid cell */
 .items-box-layout img {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
+}
+
+.items-box-layout > * {
+  aspect-ratio: 1 / 1;
 }
 
 /* Optional: hide scrollbar (WebKit) while keeping scrollability */

@@ -15,11 +15,12 @@ import '../../index.css';
 import { checkBankTagString, type CheckBankTagStringResult } from '@/util/bankTagStringHelper';
 import { useState } from 'react';
 import { CreateBankTabSchema } from './models';
-import { FaRegSquarePlus } from 'react-icons/fa6';
+import { FaCheck, FaRegSquarePlus } from 'react-icons/fa6';
 import { useCreateBankTab } from '@/hooks/useCreateBankTab';
 import { useNavigate } from 'react-router-dom';
 import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
 import { TagsEnum, type Tags } from '@/types';
+import { RxCross1 } from 'react-icons/rx';
 
 function Create() {
   const [importString, setImportString] = useState('');
@@ -31,6 +32,7 @@ function Create() {
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [itemIds, setItemIds] = useState<string[] | undefined>(undefined);
   const [passkey, setPasskey] = useState<string | null>(null);
+  const [copySuccess, setCopySuccess] = useState<boolean | null>(null);
 
   console.log('Selected Tags:', selectedTags);
   console.log('Item IDs:', itemIds);
@@ -56,11 +58,14 @@ function Create() {
       setItemIds(validation.itemIds);
       if (validation.result.message && !validation.result.isValid) {
         setMessage(validation.result.message);
+        setCopySuccess(false);
       } else {
         setMessage('Your bank tag is valid!');
+        setCopySuccess(true);
       }
     } catch (err) {
       console.error('Failed to read clipboard contents: ', err);
+      setCopySuccess(false);
     }
   };
 
@@ -103,7 +108,6 @@ function Create() {
       };
 
       const result = await createBankTab.mutateAsync(payload);
-      console.log('Create result:', result);
 
       //redirect to the newly created bank tab page
       navigate(`/banktab/${result.id}`);
@@ -119,6 +123,12 @@ function Create() {
     <div className="create-container">
       <Button size="sm" onClick={handleImportClipboard}>
         Import From Clipboard
+        {copySuccess !== null &&
+          (copySuccess ? (
+            <FaCheck key="success" className="icon flash " />
+          ) : (
+            <RxCross1 key="error" className="icon flash " />
+          ))}
       </Button>
       <Textarea
         className={`create-textarea ${

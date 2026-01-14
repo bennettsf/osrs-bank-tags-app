@@ -20,7 +20,7 @@ function NavBar() {
           <Link to="/favorites">My Favorites</Link>
         </li>
         <li>
-          <Link to="/info">Import Tutorial</Link>
+          <Link to="/help">Help</Link>
         </li>
       </ul>
     </nav>

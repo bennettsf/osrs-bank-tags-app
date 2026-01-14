@@ -51,3 +51,7 @@ body {
 main {
   padding-top: 60px; /* Height of the fixed nav-bar */
 }
+
+a:hover u {
+  color: #eab308;
+}

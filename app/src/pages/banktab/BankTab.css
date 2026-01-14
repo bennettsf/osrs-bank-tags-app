@@ -109,6 +109,10 @@
   font-size: 1.3rem;
 }
 
+.icon.flash {
+  animation: flash 300ms ease;
+}
+
 @keyframes flash {
   0% {
     transform: scale(1);
@@ -132,10 +136,6 @@
 }
 .error {
   color: rgb(255, 0, 0);
-}
-
-.icon.flash {
-  animation: flash 300ms ease;
 }
 
 .center-message {

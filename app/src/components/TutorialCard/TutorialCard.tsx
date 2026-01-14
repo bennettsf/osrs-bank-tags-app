@@ -4,8 +4,8 @@ interface TutorialCardProps {
   // Define any props if needed in the future
   image: string;
   step: number;
-  title: string;
-  description: string;
+  title: React.ReactNode;
+  description: React.ReactNode;
 }
 
 function TutorialCard({ image, step, title, description }: TutorialCardProps) {
@@ -17,7 +17,8 @@ function TutorialCard({ image, step, title, description }: TutorialCardProps) {
   return (
     <div className="tutorial-card">
       <div className="description-section">
-        <h1 className="tutorial-card-header">{`Step ${step}: ${title}`}</h1>
+        <h1 className="tutorial-card-header">{`Step ${step}: `}</h1>
+        <div className="tutorial-card-title">{title}</div>
         <p className="tutorial-card-description">{description}</p>
       </div>
       <div className="image-section">
@@ -27,7 +28,7 @@ function TutorialCard({ image, step, title, description }: TutorialCardProps) {
             <source src={image} type="video/mp4" />
           </video>
         ) : (
-          <img src={image} alt={title} className="tutorial-card-image" />
+          <img src={image} className="tutorial-card-image" />
         )}
       </div>
     </div>
