@@ -5,14 +5,33 @@ import { exportSteps } from '@/data/exportSteps';
 import { SegmentGroup } from '@chakra-ui/react';
 import { useState } from 'react';
 
+// Retrieve selected tutorial steps from localStorage or default to 'import-steps'
+const getSelected = () => {
+  const selected = localStorage.getItem('tutorialSteps') || 'import-steps';
+  return selected;
+};
+
 function Tutorial() {
-  const [selectedSteps, setSelectedSteps] = useState<string | null>('import-steps');
+  const [selectedSteps, setSelectedSteps] = useState<string | null>(() => {
+    return getSelected() as 'import-steps' | 'export-steps';
+  });
+
+  // Handle change of selected tutorial steps
+  const handleChange = (value: string | null) => {
+    // Update localStorage and state only if the value has changed and is not null
+    if (selectedSteps !== value && value) {
+      localStorage.setItem('tutorialSteps', value);
+      setSelectedSteps(value);
+    }
+    console.log(localStorage.getItem('tutorialSteps'));
+  };
+
   return (
     <div className="tutorial-container">
       <div className="segmented-control">
         <SegmentGroup.Root
           defaultValue={selectedSteps}
-          onValueChange={(e) => setSelectedSteps(e.value)}
+          onValueChange={(e) => handleChange(e.value)}
           className="segment-root"
           size={'lg'}
         >

@@ -39,7 +39,7 @@ video {
   flex-wrap: wrap;
 }
 
-.tutorial-card-description {
+.description-section p {
   padding: 1rem;
   font-size: 1.2rem;
 }

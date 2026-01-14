@@ -13,13 +13,12 @@ function TutorialCard({ image, step, title, description }: TutorialCardProps) {
   const cleanSrc = image.split('?')[0];
   const isVideo = /\.(webm|mp4)$/i.test(cleanSrc);
 
-  console.log(isVideo);
   return (
     <div className="tutorial-card">
       <div className="description-section">
         <h1 className="tutorial-card-header">{`Step ${step}: `}</h1>
-        <div className="tutorial-card-title">{title}</div>
-        <p className="tutorial-card-description">{description}</p>
+        <h1 className="tutorial-card-title">{title}</h1>
+        {description}
       </div>
       <div className="image-section">
         {isVideo ? (
