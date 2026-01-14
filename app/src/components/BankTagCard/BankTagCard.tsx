@@ -38,8 +38,9 @@ function BankTagCard({ data }: BankTagCardProps) {
           variant="outline"
           colorPalette="yellow"
           className="copy-button"
+          size={'xs'}
         >
-          Import String <FaRegCopy />
+          Copy Import String <FaRegCopy />
         </Button>
         {isLiked ? (
           <IoMdHeart onClick={() => handleLike(data.id.toString())} className="like-button" />

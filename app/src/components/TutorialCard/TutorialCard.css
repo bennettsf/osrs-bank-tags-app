@@ -1,0 +1,52 @@
+img,
+video {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.tutorial-card {
+  display: grid;
+  grid-template-columns: 60% 40%;
+  border: 2px solid #8e8e8e;
+  background-color: rgb(50, 50, 50);
+  width: 60%;
+  border-radius: 8px;
+  overflow: hidden; /* clip children to rounded corners */
+  transition: transform 400ms ease, border-color 150ms ease;
+  will-change: transform;
+}
+
+.tutorial-card:hover {
+  border-color: #eab308;
+  transform: translateY(-4px) scale(1.01);
+}
+
+.tutorial-card-header {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 1rem;
+  grid-column: span 2;
+  color: #eab308;
+}
+
+.tutorial-card-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.description-section p {
+  padding: 1rem;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 56em) {
+  .tutorial-card {
+    grid-template-columns: 1fr;
+    width: 80%;
+  }
+}

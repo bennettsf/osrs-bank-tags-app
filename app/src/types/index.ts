@@ -1,3 +1,4 @@
+import type React from 'react';
 import { z } from 'zod';
 
 export const TagsEnum = z.enum([
@@ -23,3 +24,10 @@ export const BankTabResponseSchema = z.object({
 });
 
 export type BankTabResponse = z.infer<typeof BankTabResponseSchema>;
+
+export type StepItem = {
+  image: string;
+  step: number;
+  title: string;
+  description: React.ReactNode;
+};
