@@ -11,6 +11,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import BankTab from './pages/banktab/BankTab.tsx';
 import { FavoritesContextProvider } from './context/FavoritesContext.tsx';
 import ImportTab from './pages/import-tab/ImportTab.tsx';
+import Tutorial from './pages/tutorial/Tutorial.tsx';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,7 @@ const router = createBrowserRouter([
       { path: 'import', element: <ImportTab /> },
       { path: 'banktab/:tabId', element: <BankTab /> },
       { path: 'favorites', element: <Favorites /> },
+      { path: 'info', element: <Tutorial /> },
     ],
   },
 ]);
