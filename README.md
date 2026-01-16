@@ -24,7 +24,7 @@ OSRS Bank Tags App allows players to share and discover bank tag configurations 
 - **Favorites System** - Save your favorite bank tabs locally
 - **Responsive Layout** - Clean two-pane design with fixed navigation
 - **Tutorial** - Step-by-step guides for importing and exporting bank tags
-- **Like System** - Upvote community bank tabs
+- **Like System** - Upvote community bank tabs (Soon...)
 
 ## 🛠️ Tech Stack
 
@@ -42,39 +42,6 @@ OSRS Bank Tags App allows players to share and discover bank tag configurations 
 
 - **Supabase** - Database and Edge Functions
 - **Deno** - Edge function runtime
-
-## 📁 Project Structure
-
-```
-osrs-bank-tags-app/
-├── app/                          # Frontend React application
-│   ├── src/
-│   │   ├── api/                  # API request functions
-│   │   ├── components/           # Reusable UI components
-│   │   │   ├── BankTabDisplay/   # Display individual bank tab items
-│   │   │   ├── BankTagCard/      # Bank tag preview cards
-│   │   │   ├── BankTagContent/   # Main content area
-│   │   │   ├── NavBar/           # Top navigation
-│   │   │   ├── SideBar/          # Category sidebar
-│   │   │   └── TutorialCard/     # Tutorial step cards
-│   │   ├── context/              # React context (Favorites)
-│   │   ├── hooks/                # Custom React hooks
-│   │   ├── pages/                # Route pages
-│   │   │   ├── banktab/          # Individual bank tab view
-│   │   │   ├── favorites/        # Saved favorites page
-│   │   │   ├── home/             # Homepage with browsing
-│   │   │   ├── import-tab/       # Create/import new tab
-│   │   │   └── tutorial/         # Help & tutorials
-│   │   ├── types/                # TypeScript type definitions
-│   │   └── util/                 # Utility functions
-│   └── ...config files
-│
-└── supabase/                     # Supabase configuration
-    ├── config.toml               # Supabase project config
-    └── functions/                # Edge functions
-        ├── _shared/              # Shared utilities
-        └── create-bank-tab/      # Bank tab creation endpoint
-```
 
 ## 🚀 Getting Started
 
