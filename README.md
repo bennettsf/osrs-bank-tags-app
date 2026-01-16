@@ -9,7 +9,7 @@ A web application for browsing, sharing, and importing Old School RuneScape bank
 
 ## 🎮 About
 
-OSRS Bank Tags App allows players to share and discover bank tag configurations for Old School RuneScape. The app integrates with the [Bank Tag Layouts](https://runelite.net/plugin-hub/show/bank-tag-layouts) RuneLite plugin, enabling users to:
+OSRS Bank Tags App allows players to share and discover bank tag configurations for Old School RuneScape. The app integrates with the built-in Bank Tags RuneLite plugin, enabling users to:
 
 - **Browse** community-created bank tag tabs
 - **Import** bank tags directly from your clipboard
