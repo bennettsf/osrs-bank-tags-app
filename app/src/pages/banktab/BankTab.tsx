@@ -1,13 +1,13 @@
 import './BankTab.css';
 import { useParams } from 'react-router-dom';
 import { useGetBankTab } from '@/hooks/useGetBankTab';
-import { generateItemIds } from '@/util/bankTagStringHelper';
 import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
 import { Button, Spinner } from '@chakra-ui/react';
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 import { RxCross1 } from 'react-icons/rx';
 import { useFavorites } from '@/hooks/useFavorites';
+import { generateItemIds } from '@shared/bank-tags/helpers/generateItemIds';
 
 function BankTab() {
   const { tabId } = useParams<{ tabId: string }>();
@@ -72,7 +72,11 @@ function BankTab() {
           </div>
           <div className="bank-tab-likes">Favorites: {tabData.likes}</div>
         </div>
-        <BankTabDisplay itemIds={itemIds} layout={tabData.layout} importString={tabData.import_string} />
+        <BankTabDisplay
+          itemIds={itemIds}
+          layout={tabData.layout}
+          importString={tabData.import_string}
+        />
       </div>
     </div>
   );

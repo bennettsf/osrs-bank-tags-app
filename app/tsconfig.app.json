@@ -30,10 +30,16 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@shared/*": [
+        "../shared/*"
       ]
     }
   },
   "include": [
-    "src"
+    "src",
+    "../shared/bank-tags/helpers",
+    "../shared/bank-tags/bankTagStringHelper.ts",
+    "../shared/bank-tags/types.ts"
   ]
 }

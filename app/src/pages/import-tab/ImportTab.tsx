@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import './ImportTab.css';
 import '../../index.css';
-import { checkBankTagString, type CheckBankTagStringResult } from '@/util/bankTagStringHelper';
+
 import { useState } from 'react';
 import { CreateBankTabSchema } from './models';
 import { FaCheck, FaRegSquarePlus } from 'react-icons/fa6';
@@ -21,26 +21,18 @@ import { useNavigate } from 'react-router-dom';
 import { BankTabDisplay } from '@/components/BankTabDisplay/BankTabDisplay';
 import { TagsEnum, type Tags } from '@/types';
 import { RxCross1 } from 'react-icons/rx';
+import type { BankTagParseResult } from '@shared/bank-tags/types';
+import { parseBankTagString } from '@shared/bank-tags/bankTagStringHelper';
 
-function Create() {
+export default function Create() {
   const [importString, setImportString] = useState('');
-  const [isValid, setIsValid] = useState<boolean | undefined>(undefined);
   const [message, setMessage] = useState<string | undefined>(' ');
-  const [icon, setIcon] = useState<string | undefined>(undefined);
-  const [layout, setLayout] = useState<boolean | undefined>(undefined);
-  const [name, setName] = useState<string | undefined>(undefined);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [itemIds, setItemIds] = useState<string[] | undefined>(undefined);
   const [passkey, setPasskey] = useState<string | null>(null);
+  // parsed bank tag result
+  const [parsedTag, setParsedTag] = useState<BankTagParseResult | null>(null);
+  // used for clipboard copy success indicator
   const [copySuccess, setCopySuccess] = useState<boolean | null>(null);
-
-  console.log('Selected Tags:', selectedTags);
-  console.log('Item IDs:', itemIds);
-  console.log('Layout:', layout);
-  console.log('Icon:', icon);
-  console.log('Name:', name);
-  console.log('Passkey:', passkey);
-  console.log('Import String:', importString);
 
   const navigate = useNavigate();
 
@@ -48,44 +40,47 @@ function Create() {
 
   const handleImportClipboard = async () => {
     try {
-      const text = await navigator.clipboard.readText();
-      setImportString(text.replaceAll(' ', ''));
-      const validation = checkBankTagString(text);
-      setIsValid(validation.result.isValid);
-      setLayout(validation.layout);
-      setIcon(validation.icon);
-      setName(validation.name);
-      setItemIds(validation.itemIds);
-      if (validation.result.message && !validation.result.isValid) {
-        setMessage(validation.result.message);
+      const raw = await navigator.clipboard.readText();
+      const cleaned = raw.replaceAll(' ', '');
+      setImportString(cleaned);
+      const validation = parseBankTagString(cleaned);
+
+      if (!validation.ok) {
+        setParsedTag(null);
         setCopySuccess(false);
       } else {
-        setMessage('Your bank tag is valid!');
+        setParsedTag(validation);
         setCopySuccess(true);
       }
+      setMessage(validation.message);
     } catch (err) {
       console.error('Failed to read clipboard contents: ', err);
-      setCopySuccess(false);
+      setMessage('Failed to read clipboard contents.');
     }
   };
 
   const handleSubmit = async () => {
     try {
-      if (!isValid || !icon || !name || !layout) {
+      if (!parsedTag) {
         setMessage('Please import a valid bank tag first.');
         return;
       }
 
+      if (!('name' in parsedTag)) {
+        setMessage("Invalid parsed bank tag. Name doesn't exist.");
+        return;
+      }
+
       // add tagName to array,change tags to lowercase and remove duplicates
-      const selectedTagsWithName = [...selectedTags, name];
+      const selectedTagsWithName = [...selectedTags, parsedTag.name];
       const selectedTagsSet = new Set(selectedTagsWithName.map((tag) => tag.toLowerCase()));
       const finalTags = Array.from(selectedTagsSet);
 
       const toValidate = {
-        name: name,
-        icon: icon,
+        name: parsedTag.name,
+        icon: parsedTag.icon,
         import_string: importString,
-        layout: layout,
+        layout: parsedTag.layout,
         tags: finalTags,
         edit_passkey: passkey ? passkey : null,
       };
@@ -115,24 +110,26 @@ function Create() {
       setMessage('Bank tab created successfully!');
     } catch (err) {
       console.error('Submit failed:', err);
-      setMessage('Failed to create bank tab.');
+      setMessage('Failed to create the bank tab.');
     }
   };
+
+  console.log('parsedTag:', parsedTag);
 
   return (
     <div className="create-container">
       <Button size="sm" onClick={handleImportClipboard}>
         Import From Clipboard
         {copySuccess !== null &&
-          (copySuccess ? (
-            <FaCheck key="success" className="icon flash " />
+          (copySuccess === true ? (
+            <FaCheck key="success" className="icon flash" />
           ) : (
-            <RxCross1 key="error" className="icon flash " />
+            <RxCross1 key="error" className="icon flash" />
           ))}
       </Button>
       <Textarea
         className={`create-textarea ${
-          isValid ? 'valid-glow' : isValid === false ? 'invalid-glow' : ''
+          parsedTag?.ok ? 'valid-glow' : parsedTag?.ok === false ? 'invalid-glow' : ''
         }`}
         size="xl"
         value={importString}
@@ -140,10 +137,13 @@ function Create() {
       />
 
       <div className="result-container">
-        <BankTagForm icon={icon} name={name} />
+        <BankTagForm
+          icon={parsedTag?.ok ? parsedTag?.icon : ''}
+          name={parsedTag?.ok ? parsedTag?.name : ''}
+        />
         <BankTabDisplay
-          itemIds={itemIds ?? []}
-          layout={layout ?? false}
+          itemIds={parsedTag?.ok ? parsedTag.itemIds : []}
+          layout={parsedTag?.ok ? parsedTag.layout : false}
           importString={importString ?? ''}
         />
         <TagsDisplay selectedTags={selectedTags} setSelectedTags={setSelectedTags} />
@@ -152,18 +152,18 @@ function Create() {
           className="submit-box"
           style={{ gridArea: 'box-submit' }}
           size="sm"
-          disabled={!isValid || selectedTags.length === 0 || createBankTab.isPending}
+          disabled={!parsedTag?.ok || selectedTags.length === 0 || createBankTab.isPending}
           onClick={handleSubmit}
         >
           Submit
         </Button>
       </div>
-      <Text className={isValid ? 'valid-text' : 'invalid-text'}>{message ? message : ' '}</Text>
+      <Text className={parsedTag?.ok === true ? 'valid-text' : 'invalid-text'}>
+        {message ? message : ' '}
+      </Text>
     </div>
   );
 }
-
-export default Create;
 
 function BankTagPasskey({
   passkey,
@@ -194,7 +194,12 @@ function BankTagPasskey({
   );
 }
 
-function BankTagForm({ icon, name }: Pick<CheckBankTagStringResult, 'icon' | 'name'>) {
+interface BankTagFormProps {
+  icon: string | null;
+  name: string | null;
+}
+
+function BankTagForm({ icon, name }: BankTagFormProps) {
   return (
     <div className="grid-box" style={{ gridArea: 'box-form' }}>
       <div className="tag-name">
@@ -291,47 +296,3 @@ function TagsDisplay({
     </div>
   );
 }
-
-// function LayoutEnabled({ layout }: Pick<CheckBankTagStringResult, 'layout'>) {
-//   return (
-//     <div className="grid-box" style={{ gridArea: 'box-layout' }}>
-//       <Text className="details-text">
-//         Layout Enabled:{' '}
-//         {layout ? <RxCheck color="green" /> : layout === false ? <RxCross2 color="red" /> : null}
-//       </Text>
-//       <div className="info-icon">
-//         <Tooltip
-//           content="Enabling layout will show the items in the custom tab as if they were in one single tab, rather than split into multiple custom tabs provided by Jagex, assuming you use those as well.
-//         This can be toggled by right clicking your custom tab in-game and selecting 'Enable Layout'."
-//         >
-//           <FaRegQuestionCircle />
-//         </Tooltip>
-//       </div>
-//     </div>
-//   );
-// }
-
-// function IconDisplay({ icon }: Pick<CheckBankTagStringResult, 'icon'>) {
-//   return (
-//     <div className="grid-box" style={{ gridArea: 'box-icon' }}>
-//       <Text className="details-text">
-//         Icon:{' '}
-//         {icon ? (
-//           <img
-//             className="icon-image"
-//             src={`https://static.runelite.net/cache/item/icon/${icon}.png`}
-//             alt="icon"
-//           />
-//         ) : null}
-//       </Text>
-//     </div>
-//   );
-// }
-
-// function NameDisplay({ tagName }: Pick<CheckBankTagStringResult, 'tagName'>) {
-//   return (
-//     <div className="grid-box" style={{ gridArea: 'box-name' }}>
-//       <Text className="details-text">Name: {tagName ? tagName : null}</Text>
-//     </div>
-//   );
-// }

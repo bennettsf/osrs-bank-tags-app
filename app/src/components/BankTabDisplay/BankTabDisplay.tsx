@@ -2,7 +2,7 @@ import { Text } from '@chakra-ui/react';
 import { Tooltip } from '../ui/tooltip';
 import { FaRegQuestionCircle } from 'react-icons/fa';
 import './BankTabDisplay.css';
-import { indexToRowColumn } from '@/util/bankTagStringHelper';
+import { indexToRowColumn } from '@/util/indexToRowColumn';
 
 const toolTipContent = `Enabling layout allows you to reorder items by dragging them to any slot. This can be toggled by right clicking your custom tab in-game and selecting 'Enable Layout'.`;
 
